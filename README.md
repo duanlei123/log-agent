@@ -34,12 +34,13 @@ Kibana 也是一个开源和免费的工具，它Kibana可以为 Logstash 和 El
 
 # 系统架构(不完成)
 ![](https://github.com/duanlei123/log-agent/blob/master/IMG/%E6%97%A5%E5%BF%97%E6%94%B6%E9%9B%86%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%9B%BE.png)\
-log Agent : 需要部署到没一台业务应用机器,负责根据配置读取应用日志。\
-kafka(http://kafka.apachecn.org/quickstart.html): 接收log Agent发送的日志。\ kafka 设计为了水平扩展日志系统。\
-ES(https://es.xiaoleilu.com/): 存kafak获取应用日志,创建索引.\
-hadoop:离线计算(不做)、\
-storm:日志分析(不做)、\
+log Agent : 日志收集客户端,用来收集服务器上的日志.需要部署到没一台业务应用机器,负责根据配置读取应用日志。\
+kafka 高吞吐量分布式队列(http://kafka.apachecn.org/quickstart.html): 接收log Agent发送的日志。\ kafka 设计为了水平扩展日志系统。\
+ES 开源搜索引擎,提供基于http restful的web接口(https://es.xiaoleilu.com/): 存kafak获取应用日志,创建索引.\
+hadoop(分布式计算框架):离线计算(不做)、\
+storm(实时计算框架):日志分析(不做)、\
 除上面hadoop 和 storm 还可以水平扩展很多系统平台\
+
 
 欢迎大家前来指导.......
 
