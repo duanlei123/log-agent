@@ -15,6 +15,7 @@ type Config struct {
 	LogLevel    string              //日志级别
 	LogPath     string              // 日志路径
 	CollectConf []tailf.CollectConf //所收集的日志
+	ChanSize int
 }
 
 func loadCollectConf(conf config.Configer) (err error) {
@@ -49,6 +50,10 @@ func loadConf(confType, filename string) error {
 	if len(appConfig.LogPath) == 0 {
 		// 设置兜底默认值
 		appConfig.LogPath = "./logs"
+	}
+	appConfig.ChanSize, err = conf.Int("collect::chan_size")
+	if err != nil {
+		appConfig.ChanSize = 100
 	}
 	// 加载收集相关的配置
 	err = loadCollectConf(conf)
