@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/astaxie/beego/logs"
+	"log-agent/kafka"
 	"log-agent/tailf"
 	"time"
 )
@@ -22,7 +23,7 @@ func serverRun() (err error) {
 
 func sendToKafka(msg *tailf.TextMsg)(err error){
 	// 测试将读取到的日志写入项目日志中
-	logs.Debug("read msg:%s, topic: %s",msg.Msg, msg.Topic )
+	err = kafka.SendToKafka(msg.Msg, msg.Topic)
 	return
 }
 

@@ -16,6 +16,8 @@ type Config struct {
 	LogPath     string              // 日志路径
 	CollectConf []tailf.CollectConf //所收集的日志
 	ChanSize int
+	KafkaAddr string
+
 }
 
 func loadCollectConf(conf config.Configer) (err error) {
@@ -55,6 +57,14 @@ func loadConf(confType, filename string) error {
 	if err != nil {
 		appConfig.ChanSize = 100
 	}
+
+	appConfig.KafkaAddr = conf.String("kafka::server_addr")
+	if len(appConfig.KafkaAddr) == 0 {
+		// 如果为配置kafka地址，则报错
+		err = fmt.Errorf("invalid kafka addr")
+		return err
+	}
+
 	// 加载收集相关的配置
 	err = loadCollectConf(conf)
 	if err != nil {

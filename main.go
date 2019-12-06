@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/astaxie/beego/logs"
+	"log-agent/kafka"
 	"log-agent/tailf"
 )
 
@@ -22,14 +23,20 @@ func main() {
 		panic("load logger failed")
 		return
 	}
-
+	// 初始化tail
 	err = tailf.InitTail(appConfig.CollectConf, appConfig.ChanSize)
 	if err != nil{
 		logs.Error("init Tail failed err :", err)
 		return
 	}
+	// 初始化kafka客户端
+	err = kafka.InitKafkaClient(appConfig.KafkaAddr)
+	if err != nil{
+		logs.Error("init kafka failed err :", err)
+		return
+	}
 	logs.Debug("initAll success")
-
+	// 执行业务代码
 	err = serverRun()
 	if err != nil{
 		logs.Error("serverRun failed err:", err)
